@@ -7,7 +7,7 @@
 ** Error strings.
 **
 ******************************************************************************/
- 
+
 
 
 
@@ -29,7 +29,7 @@ char *ErrorArray[] =
 "Can't save file!",
 };
 
-char *AsmErrorArray[] = 
+char *AsmErrorArray[] =
 {
 "error in source file found",
 "Line  1: type of GAL expected",

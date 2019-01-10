@@ -90,7 +90,7 @@
 #define SECURITY_ADR            61
 #define ERASE_ADR               63
 
- 
+
                                   /* output's polarity: */
 #define ACTIVE_LOW      0             /* pin is high-active */
 #define ACTIVE_HIGH     1             /* pin is low-active  */
@@ -126,7 +126,7 @@
 #define ENTRY_SIZE      256             /* number of entries per buffer */
 
 #define SIZE_OF_EQUASTRING 80
- 
+
 typedef short		BOOL;
 
 
@@ -157,9 +157,9 @@ typedef unsigned char  *STRPTR;     /* string pointer (NULL terminated) */
 /******************************** structures *********************************/
 
                                         /* this structure is used to store   */
-                                        /* GALasm's configuration             */
-struct  Config 
-{ 
+                                        /* GALasm's configuration            */
+struct  Config
+{
 	BOOL GenFuse;          /* generate fuse file?        */
     BOOL GenChip;          /* generate chip file?        */
     BOOL GenPin;           /* generate pin file?         */
@@ -181,7 +181,7 @@ struct  JedecStruct { BYTE GALLogic[5808];      /*max. size of fuse matrix */
                       BYTE GALAC0;              /* AC0 bit                 */
                       BYTE GALS1   [10];        /* S1 bits for 22V10       */
                     };
-                    
+
 
                                         /* used to store infos about a pin */
 struct  Pin             { BYTE p_Neg;        /* polarity of pin */
@@ -208,7 +208,7 @@ struct  Buffer  { struct Buffer *Next;
                   struct Buffer *Prev;
                   UBYTE  Entries[ENTRY_SIZE];   /* data area */
                 };
-                                                    
+
                                         /* used to store results and     */
                                         /* parameters of functions       */
                                         /* which deal with chained lists */

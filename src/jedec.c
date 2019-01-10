@@ -187,14 +187,14 @@ int FuseChecksum(int galtype)
 *******************************************************************************
 ** input:   buff     ActBuffer structure for the ram buffer
 **          galtype  type of GAL
-**			cfg		 pointer to the config structure
+**                      cfg              pointer to the config structure
 **
 ** output:  0:  o.k.
 **         -1:  not enough free memory
 **
 ** remarks: generates the JEDEC file in a ram buffer
 ******************************************************************************/
- 
+
 int MakeJedecBuff(struct ActBuffer buff, int galtype, struct Config *cfg)
 {
     UBYTE   mystrng[16];
@@ -238,7 +238,7 @@ int MakeJedecBuff(struct ActBuffer buff, int galtype, struct Config *cfg)
         if (AddString(&buff, (UBYTE *)"\2\n"))          /* <STX> */
             return(-1);
 
-	/*** make header of JEDEC file ***/
+        /*** make header of JEDEC file ***/
     if (AddString(&buff, (UBYTE *)"Used Program:   GALasm 2.1\n"))
         return(-1);
 
@@ -290,7 +290,7 @@ int MakeJedecBuff(struct ActBuffer buff, int galtype, struct Config *cfg)
     if (galtype == GAL20V8)
         if (AddString(&buff, (UBYTE *)"*QF2706\n"))
             return(-1);
-      
+
     if (galtype == GAL20RA10)
         if (AddString(&buff, (UBYTE *)"*QF3274\n"))
             return(-1);
@@ -299,7 +299,7 @@ int MakeJedecBuff(struct ActBuffer buff, int galtype, struct Config *cfg)
         if (AddString(&buff, (UBYTE *)"*QF5892\n"))
             return(-1);
 
-	/*** make fuse-matrix ***/
+        /*** make fuse-matrix ***/
 
     bitnum = bitnum2 = flag = 0;
 
@@ -483,22 +483,22 @@ int MakeJedecBuff(struct ActBuffer buff, int galtype, struct Config *cfg)
 ** WriteJedecFile()
 *******************************************************************************
 ** input:   galtype     type of GAL
-**          cfg			configuration structure
+**          cfg                 configuration structure
 **
 ** output:  none
 **
 ** remarks: generats the JEDEC file out of the JEDEC structure
 ******************************************************************************/
- 
+
 void WriteJedecFile(char *filename, int galtype, struct Config *cfg)
 {
     struct  ActBuffer       mybuff;
     struct  Buffer          *first_buff;
     UBYTE   *filebuffer, *filebuffer2;
     long    result;
-	FILE *fp;
+        FILE *fp;
 
-	if(!(first_buff = (struct Buffer *) calloc(sizeof(struct Buffer),1)))
+        if(!(first_buff = (struct Buffer *) calloc(sizeof(struct Buffer),1)))
     {
         ErrorReq(2);                                /* out of memory? */
         return;
@@ -530,8 +530,8 @@ void WriteJedecFile(char *filename, int galtype, struct Config *cfg)
                 filebuffer2++;
             }
                                                 /* save buffer */
-			/* DHH - 24-Oct-2012: ensure lines are terminated with CRLF */
-			result = WriteOutput(filebuffer,(size_t) 1, (size_t) (filebuffer2 - filebuffer),fp);
+                        /* DHH - 24-Oct-2012: ensure lines are terminated with CRLF */
+                        result = WriteOutput(filebuffer,(size_t) 1, (size_t) (filebuffer2 - filebuffer),fp);
 
             if (result != (filebuffer2 - filebuffer))
             {                                   /* write error? */
@@ -569,17 +569,17 @@ void WriteJedecFile(char *filename, int galtype, struct Config *cfg)
  */
 static size_t WriteOutput(void *buf_, size_t size, size_t nmemb, FILE *out)
 {
-	unsigned char *buf = (unsigned char *) buf_;
-	size_t i;
+        unsigned char *buf = (unsigned char *) buf_;
+        size_t i;
 
-	for (i = 0; i < size*nmemb; i++) {
-		unsigned char byte = buf[i];
-		if (byte == '\n') {
-			fwrite("\r\n", 1, 2, out);
-		} else {
-			fwrite(&byte, 1, 1, out);
-		}
-	}
+        for (i = 0; i < size*nmemb; i++) {
+                unsigned char byte = buf[i];
+                if (byte == '\n') {
+                        fwrite("\r\n", 1, 2, out);
+                } else {
+                        fwrite(&byte, 1, 1, out);
+                }
+        }
 
-	return nmemb;
+        return nmemb;
 }

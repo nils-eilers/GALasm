@@ -35,25 +35,25 @@
 
 
 /******************************** variables **********************************/
- 
+
 
 
 
 /* Diese Arrays geben an, in welche Spalte der ent-  */
-/* sprechende Pin eingekoppelt (bzw. rückgekoppelt)  */
-/* wird. Für die invertierende Einkopplung ist 1 zu  */
+/* sprechende Pin eingekoppelt (bzw. rueckgekoppelt)  */
+/* wird. Fuer die invertierende Einkopplung ist 1 zu  */
 /* addieren, um die entsprechende Spalte zu erhalten */
-/* -1 heißt: keine Einkopplung auf Matrix vorhanden  */
+/* -1 heisst: keine Einkopplung auf Matrix vorhanden  */
 
 
 /* A possible translation (courtesy of Babelfish)
  * These arrays indicate, into which column the appropriate pin
- * becomes linked (and/or jerk-coupled). For inverting linking 
+ * becomes linked (and/or jerk-coupled). For inverting linking
  * is to be added 1, in order to receive the appropriate column -1 hei_t
  * : no linking on matrix available.
  */
 
-/* Possible interpretation (by me) 
+/* Possible interpretation (by me)
  * These arrays maps the pins to the fuse matrix. Each integer
  * represents the number of the linked column or -1 if that pin
  * dosn't link to any column . For inverted signals, the right column
@@ -123,7 +123,7 @@ UBYTE   PinNames[24][10];
 UBYTE   PinDecNeg[24];
 UBYTE   ModeErrorStr[] = "Mode  x:  Pin xx";
 UBYTE   *pinnames;
-int    	modus;
+int     modus;
 
 int     linenum;
 UBYTE   *actptr, *buffend;
@@ -141,16 +141,16 @@ UBYTE   *fbuff;
 /******************************************************************************
 ** int AssemblePldFile(char *file)
 *******************************************************************************
-** input:   file  The file to be assembled 
+** input:   file  The file to be assembled
 **
 ** output:  0:    successful
 **          else: error
 **
 ** remarks: This function does assemble a *.pld file.
 ******************************************************************************/
- 
+
 int AssemblePldFile(char *file, struct Config *cfg)
-{ 
+{
     UBYTE   chr;
     UBYTE   *bool_start, *oldptr;
     char    prevOp;
@@ -159,14 +159,14 @@ int AssemblePldFile(char *file, struct Config *cfg)
     int     max_chr, pass, pin_num, bool_linenum;
     int     actOLMC, row_offset, newline, oldline;
     int     suffix, start_row, max_row, num_of_olmcs;
-	int		gal_type;
-	int		num_of_pins;
-	int  	num_of_col,fsize;
+        int             gal_type;
+        int             num_of_pins;
+        int     num_of_col,fsize;
 
         {
             fsize = FileSize(file);
 
-		if((fbuff = malloc(fsize)))
+                if((fbuff = malloc(fsize)))
             {
                 if ((ReadFile(file, fsize, fbuff)))
                 {
@@ -175,7 +175,7 @@ int AssemblePldFile(char *file, struct Config *cfg)
                     linenum = 1;
 
 /* This code generates a warning about exceeding array bounds */
-#if	0
+#if     0
                     for (n = 0; n < sizeof(Jedec); n++)
                     {                            /* init. JEDEC structure */
                         if (n < LOGIC22V10_SIZE)
@@ -209,9 +209,9 @@ int AssemblePldFile(char *file, struct Config *cfg)
                         num_of_col   = MAX_FUSE_ADR16 + 1; /* number of col.  */
                         gal_type     = GAL16V8;
 
-                        if ((*(actptr+7L) != ' ')  &&	/* Only ' ', newline and tab are valid 	*/
-                            (*(actptr+7L) != 0x0A) &&   /* after the GAL's name					*/
-                            (*(actptr+7L) != 0x09))		/* Any other char will produce an error */
+                        if ((*(actptr+7L) != ' ')  &&   /* Only ' ', newline and tab are valid  */
+                            (*(actptr+7L) != 0x0A) &&   /* after the GAL's name                                 */
+                            (*(actptr+7L) != 0x09))             /* Any other char will produce an error */
                         {
                           AsmError(1, 0);
                             return(-1);
@@ -465,8 +465,8 @@ int AssemblePldFile(char *file, struct Config *cfg)
 /* Boolean-Equations auswerten:
    Dabei werden die Boolean-Equations zweimal untersucht. Beim ersten
    Durchlauf werden die OLMC-Pins ausgewertet und die OLMC-Struktur ge-
-   füllt. Mit Hilfe dieser Struktur läßt sich auf dem notwendigen Modus
-   (1, 2 oder 3) schließen. Beim zweiten Durchlauf wird dann die
+   fuellt. Mit Hilfe dieser Struktur laesst sich auf dem notwendigen Modus
+   (1, 2 oder 3) schliessen. Beim zweiten Durchlauf wird dann die
    Fuse-Matrix erstellt.
 */
 
@@ -474,7 +474,7 @@ int AssemblePldFile(char *file, struct Config *cfg)
    Boolean Equations evaluate:
    The Boolean Equations is twice examined.
    With the first run the OLMC pins are evaluated and the OLMC structure is filled.
-   With the help of this structure the correct mode (1, 2 or 3) will be 
+   With the help of this structure the correct mode (1, 2 or 3) will be
    calculated. With the second run the Fuse matrix is then provided.
 */
     if (GetNextChar())                  /* end of file? */
@@ -497,7 +497,7 @@ int AssemblePldFile(char *file, struct Config *cfg)
 
     for (pass = 0; pass < 2; pass++)  /* this is a two-pass-assembler */
     {
-	printf("Assembler Phase %d for \"%s\"\n", (pass+1), file);
+        printf("Assembler Phase %d for \"%s\"\n", (pass+1), file);
 
         if (pass)                       /* 2. pass? => make ACW and get */
         {                               /* the mode for 16V8,20V8 GALs  */
@@ -623,7 +623,7 @@ int AssemblePldFile(char *file, struct Config *cfg)
                         }
                     }
                 }
-        
+
                 /* make ACW; (SYN and AC0 are */
                 /* defined already) */
 
@@ -689,8 +689,8 @@ int AssemblePldFile(char *file, struct Config *cfg)
             }
         }
 
-	if(pass)
-		printf("GAL %s; Operation mode %d; Security fuse %s\n", GetGALName(gal_type), modus, cfg->JedecSecBit ? "on" : "off");
+        if(pass)
+                printf("GAL %s; Operation mode %d; Security fuse %s\n", GetGALName(gal_type), modus, cfg->JedecSecBit ? "on" : "off");
 
         actptr  = bool_start;
         linenum = bool_linenum;
@@ -737,12 +737,12 @@ loop1:
 
             suffix_strn[n] = 0;                 /* mark end of string */
 
-                 if (suffix_strn[0] == 'T')				suffix = SUFFIX_T;
-            else if (suffix_strn[0] == 'R')				suffix = SUFFIX_R;
-            else if (suffix_strn[0] == 'E')				suffix = SUFFIX_E;
-            else if (!strcmp(&suffix_strn[0], "CLK"))	suffix = SUFFIX_CLK;
-            else if (!strcmp(&suffix_strn[0], "ARST"))	suffix = SUFFIX_ARST;
-            else if (!strcmp(&suffix_strn[0], "APRST"))	suffix = SUFFIX_APRST;
+                 if (suffix_strn[0] == 'T')                             suffix = SUFFIX_T;
+            else if (suffix_strn[0] == 'R')                             suffix = SUFFIX_R;
+            else if (suffix_strn[0] == 'E')                             suffix = SUFFIX_E;
+            else if (!strcmp(&suffix_strn[0], "CLK"))   suffix = SUFFIX_CLK;
+            else if (!strcmp(&suffix_strn[0], "ARST"))  suffix = SUFFIX_ARST;
+            else if (!strcmp(&suffix_strn[0], "APRST")) suffix = SUFFIX_APRST;
             else
             {
                 AsmError(13, 0);    /* unknown suffix */
@@ -937,7 +937,7 @@ loop1:
                     }
 
                     break;
-        
+
 
 
                 case SUFFIX_ARST:
@@ -1011,7 +1011,7 @@ loop1:
             }
         }
 
-	start_row = max_row = 0;
+        start_row = max_row = 0;
 
         switch (gal_type)
         {                                       /* get first the row of the */
@@ -1346,7 +1346,7 @@ label1:
                     return(-1);
                 }
             }
-              
+
             if (!actPin.p_Pin)
             {                                       /* pin name?      */
                 AsmError(11, 0);                    /* no, then error */
@@ -1376,7 +1376,7 @@ label1:
     {
         if (OLMC[n].PinType == NOTUSED || OLMC[n].PinType == INPUT)
         {
-		int i = 0;
+                int i = 0;
 
             switch (gal_type)
             {                           /* get first row of the     */
@@ -1473,54 +1473,54 @@ label1:
                      /* set flag, so that we can see that  */
                                       /* this file is assembled succesfully */
 
-					free(fbuff);
+                                        free(fbuff);
 
 
 
                                       /*** now make the selected files ***/
 
-					/* Obtain the filename without the extension */
-					{
-						char *base; int l;
+                                        /* Obtain the filename without the extension */
+                                        {
+                                                char *base; int l;
 
 
-						if((base = GetBaseName(file)))
-						{
-							#define extman(p,l,a,b,c) { p[l-2] = a; base[l-1] = b; base[l-0] = c; }
+                                                if((base = GetBaseName(file)))
+                                                {
+                                                        #define extman(p,l,a,b,c) { p[l-2] = a; base[l-1] = b; base[l-0] = c; }
 
-							l = (strlen(base) - 1);
+                                                        l = (strlen(base) - 1);
 
-							base[l-3] = '.';
+                                                        base[l-3] = '.';
 
-							extman(base,l,'j','e','d');	
-							WriteJedecFile(base, gal_type, cfg);
+                                                        extman(base,l,'j','e','d');
+                                                        WriteJedecFile(base, gal_type, cfg);
 
-							extman(base,l,'f','u','s');	
-    	                    if(cfg->GenFuse) WriteFuseFile(base, gal_type);
+                                                        extman(base,l,'f','u','s');
+                            if(cfg->GenFuse) WriteFuseFile(base, gal_type);
 
-							extman(base,l,'p','i','n');	
-        	                if(cfg->GenPin ) WritePinFile (base, gal_type);
+                                                        extman(base,l,'p','i','n');
+                                if(cfg->GenPin ) WritePinFile (base, gal_type);
 
-							extman(base,l,'c','h','p');	
-            	            if(cfg->GenChip) WriteChipFile(base, gal_type);
+                                                        extman(base,l,'c','h','p');
+                            if(cfg->GenChip) WriteChipFile(base, gal_type);
 
-							free(base);
+                                                        free(base);
 
-						}
-						else
-						{
-							ErrorReq(2);
-							return(-2);
-						}
+                                                }
+                                                else
+                                                {
+                                                        ErrorReq(2);
+                                                        return(-2);
+                                                }
 
                         return(0);                 /* there was no error */
 
-					}
+                                        }
                 }
                 else
                 {
                     ErrorReq(3);                          /* read error */
-					free(fbuff);
+                                        free(fbuff);
                     return(-2);
                 }
             }
@@ -1548,11 +1548,11 @@ label1:
 **
 ** remarks: sets an AND (=0) in the fuse matrix
 ******************************************************************************/
- 
+
 void SetAND(int row, int pinnum, int negation, int gal_type)
 {
-	int column = 0;
-	int numofcol = 0;
+        int column = 0;
+        int numofcol = 0;
 
     switch (gal_type)
     {
@@ -1564,7 +1564,7 @@ void SetAND(int row, int pinnum, int negation, int gal_type)
             if (modus == MODE3)
                 column = PinToFuse16Mode3[pinnum - 1];
 
-			numofcol = MAX_FUSE_ADR16	+ 1;
+                        numofcol = MAX_FUSE_ADR16       + 1;
             break;
 
         case GAL20V8:
@@ -1575,7 +1575,7 @@ void SetAND(int row, int pinnum, int negation, int gal_type)
             if (modus == MODE3)
                 column  =  PinToFuse20Mode3[pinnum - 1];
 
-			numofcol = MAX_FUSE_ADR20 + 1;
+                        numofcol = MAX_FUSE_ADR20 + 1;
             break;
 
         case GAL22V10:
@@ -1588,13 +1588,13 @@ void SetAND(int row, int pinnum, int negation, int gal_type)
                 negation = negation ? 0 : 1;
             }
 
-			numofcol = MAX_FUSE_ADR22V10 + 1;
+                        numofcol = MAX_FUSE_ADR22V10 + 1;
             break;
 
         case GAL20RA10:
             column  =  PinToFuse20RA10[pinnum - 1];
-			numofcol = MAX_FUSE_ADR20RA10	+ 1;
-	        break;
+                        numofcol = MAX_FUSE_ADR20RA10   + 1;
+                break;
     }
 
     Jedec.GALLogic[row*numofcol + column + negation] = 0;
@@ -1619,7 +1619,7 @@ void SetAND(int row, int pinnum, int negation, int gal_type)
 **
 ** remarks: This function tests whether actptr points to a pinname or not
 ******************************************************************************/
- 
+
 void IsPinName(UBYTE *pinnames, int numofpins)
 {
     int     i, k;
@@ -1887,9 +1887,9 @@ int IsNEG(char chr)
 
 int GetPinNum(int gal_type)
 {
-	if(gal_type == GAL16V8) return(20);
+        if(gal_type == GAL16V8) return(20);
 
-	return(24);
+        return(24);
 }
 
 
@@ -1897,7 +1897,7 @@ int GetPinNum(int gal_type)
 ** WriteChipFile(char *filename, int gal_type)
 *******************************************************************************
 ** input:   gal type
-**			filename 
+**                      filename
 **
 ** output:  none
 **
@@ -1909,7 +1909,7 @@ void WriteChipFile(char *filename, int gal_type)
     FILE    *fp;
     int     n;
 
-	int num_of_pins = GetPinNum(gal_type);
+        int num_of_pins = GetPinNum(gal_type);
 
         if ((fp = fopen(filename, (char *)"w")))
         {
@@ -1966,10 +1966,10 @@ void WriteChipFile(char *filename, int gal_type)
 
 
 /******************************************************************************
-** WritePinFile(char é*filename, int gal_type)
+** WritePinFile(char *filename, int gal_type)
 *******************************************************************************
 ** input:   gal type
-**			filename
+**                      filename
 **
 ** output:  none
 **
@@ -1981,7 +1981,7 @@ void WritePinFile(char *filename, int gal_type)
     FILE    *fp;
     int     k, n, flag;
 
-	int num_of_pins = GetPinNum(gal_type);
+        int num_of_pins = GetPinNum(gal_type);
 
         if ((fp = fopen(filename, (char *)"w")))
         {
@@ -2102,7 +2102,7 @@ void WritePinFile(char *filename, int gal_type)
 ** remarks: writes a row of an OLMC to the file characterized by the file
 **          handle fp
 ******************************************************************************/
- 
+
 void WriteRow(FILE *fp, int row, int num_of_col)
 {
     int col;
@@ -2125,7 +2125,7 @@ void WriteRow(FILE *fp, int row, int num_of_col)
 ** WriteChipFile(char *filename, int gal_type)
 *******************************************************************************
 ** input:   gal type
-**			filename
+**                      filename
 **
 ** output:  none
 **
@@ -2137,15 +2137,15 @@ void WriteFuseFile(char *filename, int gal_type)
     FILE    *fp;
     int     row, pin, n, numofOLMCs, numofrows, olmc;
 
-	int num_of_col = 0;
+        int num_of_col = 0;
 
-	switch(gal_type)
-	{
-		case GAL16V8: 	num_of_col = MAX_FUSE_ADR16     + 1; break;
-		case GAL20V8: 	num_of_col = MAX_FUSE_ADR20     + 1; break;
-		case GAL20RA10: num_of_col = MAX_FUSE_ADR20RA10 + 1; break;
-		case GAL22V10:  num_of_col = MAX_FUSE_ADR22V10  + 1; break;
-	}
+        switch(gal_type)
+        {
+                case GAL16V8:   num_of_col = MAX_FUSE_ADR16     + 1; break;
+                case GAL20V8:   num_of_col = MAX_FUSE_ADR20     + 1; break;
+                case GAL20RA10: num_of_col = MAX_FUSE_ADR20RA10 + 1; break;
+                case GAL22V10:  num_of_col = MAX_FUSE_ADR22V10  + 1; break;
+        }
 
         if ((fp = fopen(filename, (char *)"w")))
         {
@@ -2280,7 +2280,7 @@ void WriteSpaces(FILE *fp, int numof)
 ** remarks: print error messages of the GAL-assembler and free
 **          the memory allocated by the file buffer
 ******************************************************************************/
- 
+
 void AsmError(int errornum, int pinnum)
 {
     free(fbuff);
@@ -2288,17 +2288,17 @@ void AsmError(int errornum, int pinnum)
     if (!pinnum)
         printf("Error in line %d: ", linenum);
     else
-		printf("Error, pin %d: ", pinnum);
+                printf("Error, pin %d: ", pinnum);
 
-	printf("%s\n", AsmErrorArray[errornum]);
-} 
- 
+        printf("%s\n", AsmErrorArray[errornum]);
+}
+
 /******************************************************************************
-** main 
+** main
 *******************************************************************************
-** 
+**
 ** options:
-** 
+**
 ** -s Enable security fuse
 ** -c Disable .chp file output
 ** -f Disable .fus file output
@@ -2306,110 +2306,110 @@ void AsmError(int errornum, int pinnum)
 ** -a Restrict checksum to the fuse array only
 **
 **
-** 
+**
 ******************************************************************************/
 
 
 int main(int argc, char *argv[])
 {
-	int rc;
-  	char *p;
+        int rc;
+        char *p;
 
-	struct Config cfg;
+        struct Config cfg;
 
-	cfg.GenFuse 		= TRUE;
-	cfg.GenChip 		= TRUE;
-	cfg.GenPin 	 	= TRUE;
-	cfg.JedecSecBit 	= FALSE;
-	cfg.JedecFuseChk 	= FALSE;
+        cfg.GenFuse             = TRUE;
+        cfg.GenChip             = TRUE;
+        cfg.GenPin              = TRUE;
+        cfg.JedecSecBit         = FALSE;
+        cfg.JedecFuseChk        = FALSE;
 
-	p = argv[1];
+        p = argv[1];
 
-	printf( "GALasm 2.1, Portable GAL Assembler\n"
-			"Copyright (c) 1998-2003 Alessandro Zummo. All Rights Reserved\n"
-			"Original sources Copyright (c) 1991-96 Christian Habermann\n\n");
-
-
-  	while(argc > 1 && (p[0] == '-' || (isalpha(p[1]) && (argc != 2)))) 
-	{
-    	switch(p[1]) 
-		{
-      		case 's':
-			case 'S':
-				cfg.JedecSecBit = TRUE;
-			break;
-
-      		case 'c':
-			case 'C':
-				cfg.GenChip = FALSE;
-			break;
-
-      		case 'f':
-			case 'F':
-				cfg.GenFuse = FALSE;
-			break;
-
-      		case 'p':
-			case 'P':
-				cfg.GenPin = FALSE;
-			break;
-
-      		case 'a':
-			case 'A':
-				cfg.JedecFuseChk = TRUE;
-			break;
-
-			case 'h':
-			case 'H':
-			case '?':
-	    		printf("Usage:\nGALasm [-scfpa] <filename>\n");
-				printf(	"-s Enable security fuse\n"
-						"-c Do not create the .chp file\n"
-						"-f Do not create the .fus file\n"
-						"-p Do not create the .pin file\n"
-						"-a Restrict checksum to the fuse array only\n");
-				return(0);
-
-      		case '-': 
-      		case '\0':
-			argc--;
-			argv++;
-			goto opt_done;
-
-      		default:
-				goto usage;
-    	}
-		
-
-		if(!isalpha(p[2]))
-		{
-	    	argc--;
-    		argv++;
-
-			p = argv[1];
-		}
-		else
-			p++;
-  	}
+        printf( "GALasm 2.1, Portable GAL Assembler\n"
+                        "Copyright (c) 1998-2003 Alessandro Zummo. All Rights Reserved\n"
+                        "Original sources Copyright (c) 1991-96 Christian Habermann\n\n");
 
 
-	opt_done:
+        while(argc > 1 && (p[0] == '-' || (isalpha(p[1]) && (argc != 2))))
+        {
+        switch(p[1])
+                {
+                case 's':
+                        case 'S':
+                                cfg.JedecSecBit = TRUE;
+                        break;
 
-  	if(argc != 2) 
-	{
-		usage:
-    		printf("Usage:\nGALasm [-scfpa] <filename>\n");
-			printf("Type GALasm -h for help\n");
-		return(5);
-  	}
+                case 'c':
+                        case 'C':
+                                cfg.GenChip = FALSE;
+                        break;
+
+                case 'f':
+                        case 'F':
+                                cfg.GenFuse = FALSE;
+                        break;
+
+                case 'p':
+                        case 'P':
+                                cfg.GenPin = FALSE;
+                        break;
+
+                case 'a':
+                        case 'A':
+                                cfg.JedecFuseChk = TRUE;
+                        break;
+
+                        case 'h':
+                        case 'H':
+                        case '?':
+                        printf("Usage:\nGALasm [-scfpa] <filename>\n");
+                                printf( "-s Enable security fuse\n"
+                                                "-c Do not create the .chp file\n"
+                                                "-f Do not create the .fus file\n"
+                                                "-p Do not create the .pin file\n"
+                                                "-a Restrict checksum to the fuse array only\n");
+                                return(0);
+
+                case '-':
+                case '\0':
+                        argc--;
+                        argv++;
+                        goto opt_done;
+
+                default:
+                                goto usage;
+        }
 
 
-	rc = AssemblePldFile(argv[1], &cfg);
+                if(!isalpha(p[2]))
+                {
+                argc--;
+                argv++;
 
-	if(rc != 0)
-		printf("Assembling failed.\n");
-	else
-		printf("Assembling successfully completed.\n");	
+                        p = argv[1];
+                }
+                else
+                        p++;
+        }
 
-	return(rc);
+
+        opt_done:
+
+        if(argc != 2)
+        {
+                usage:
+                printf("Usage:\nGALasm [-scfpa] <filename>\n");
+                        printf("Type GALasm -h for help\n");
+                return(5);
+        }
+
+
+        rc = AssemblePldFile(argv[1], &cfg);
+
+        if(rc != 0)
+                printf("Assembling failed.\n");
+        else
+                printf("Assembling successfully completed.\n");
+
+        return(rc);
 }

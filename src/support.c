@@ -11,48 +11,48 @@
 #include "galasm.h"
 #include <stdlib.h>
 #include <string.h>
- 
+
 /******************************************************************************
 ** GetBaseName(char *filename)
 *******************************************************************************
 ** input:   *filename   filename
 **
 ** output:  pointer to a string with a filename and
-**			enough space to add the extension later
-**			or NULL.
+**                      enough space to add the extension later
+**                      or NULL.
 **
-** remarks: the returned pointer must be free()ed 
+** remarks: the returned pointer must be free()ed
 **
 ******************************************************************************/
 
 char *GetBaseName(char *filename)
 {
-	int c,n;
+        int c,n;
 
-	char *p;
+        char *p;
 
-	c = strlen(filename);
+        c = strlen(filename);
 
-	for(n = c; n != 0; n--)
-	{ 
-		if(filename[n-1] == '.')
-		{
-			n--;
-			break;
-		}
-	}
+        for(n = c; n != 0; n--)
+        {
+                if(filename[n-1] == '.')
+                {
+                        n--;
+                        break;
+                }
+        }
 
-	if(n == 0) n = c;
+        if(n == 0) n = c;
 
-	if((p = (char *)malloc(n+5)))
-	{
-		strncpy(p, filename, n);
+        if((p = (char *)malloc(n+5)))
+        {
+                strncpy(p, filename, n);
                 strcpy(p+n, ".XXX");
 
-		return(p);
-	}
-	else
-		return(NULL);
+                return(p);
+        }
+        else
+                return(NULL);
 }
 
 
@@ -68,25 +68,25 @@ char *GetBaseName(char *filename)
 ** remarks: returns length of a file
 **
 ******************************************************************************/
- 
+
 int FileSize(char *filename)
 {
-	FILE *fp;
+        FILE *fp;
 
-	int size;
+        int size;
 
-	if((fp = fopen(filename, "r")))
-	{
-		fseek(fp, 0, SEEK_END);
+        if((fp = fopen(filename, "r")))
+        {
+                fseek(fp, 0, SEEK_END);
 
-		size = ftell(fp);
+                size = ftell(fp);
 
-		fclose(fp);
-	}
-	else
-		return(-1);
+                fclose(fp);
+        }
+        else
+                return(-1);
 
-	return(size);
+        return(size);
 }
 
 /******************************************************************************
@@ -108,16 +108,16 @@ int ReadFile(char *filename, int filesize, UBYTE *filebuff)
     int  actlen;
     FILE *fp;
 
-	if((fp = fopen(filename, "r")))
-	{
-		actlen = fread(filebuff,1,filesize,fp);
+        if((fp = fopen(filename, "r")))
+        {
+                actlen = fread(filebuff,1,filesize,fp);
 
-		fclose(fp);
+                fclose(fp);
 
-		if(actlen == filesize)
-			return(TRUE);
-	}
-	return(FALSE);
+                if(actlen == filesize)
+                        return(TRUE);
+        }
+        return(FALSE);
 }
 
 /* The functions AddByte(), AddString(), IncPointer(), DecPointer() */
@@ -147,7 +147,7 @@ int AddByte(struct ActBuffer *buff, UBYTE code)
     }
     else
     {                                       /* if not, then add a new buffer */
-		if(!(mybuff = (struct Buffer *)calloc(sizeof(struct Buffer),1)))
+                if(!(mybuff = (struct Buffer *)calloc(sizeof(struct Buffer),1)))
         {
             ErrorReq(2);
             return(-1);
@@ -177,7 +177,7 @@ int AddByte(struct ActBuffer *buff, UBYTE code)
 **          buffers.
 **
 ******************************************************************************/
- 
+
 int AddString(struct ActBuffer *buff, UBYTE *strnptr)
 {
     while (*strnptr)
@@ -203,7 +203,7 @@ int AddString(struct ActBuffer *buff, UBYTE *strnptr)
 **                     list is reached or not!
 **
 ******************************************************************************/
- 
+
 void IncPointer(struct ActBuffer *buff)
 {
 
@@ -266,17 +266,17 @@ void DecPointer(struct ActBuffer *buff)
 
 void FreeBuffer(struct Buffer *buff)
 {
-	struct Buffer *nextbuff;
+        struct Buffer *nextbuff;
 
-	while(buff)
-	{
-		nextbuff = buff->Next;
-		
-		free(buff);
-		
-		buff = nextbuff;
-	}
-}	
+        while(buff)
+        {
+                nextbuff = buff->Next;
+
+                free(buff);
+
+                buff = nextbuff;
+        }
+}
 
 /******************************************************************************
 ** GetGALName()
@@ -289,16 +289,16 @@ void FreeBuffer(struct Buffer *buff)
 
 char *GetGALName(int galtype)
 {
-	switch(galtype)
-	{
-		case GAL16V8:	return("16V8");
-		case GAL20V8:	return("20V8");
-		case GAL22V10:	return("22V10");
-		case GAL20RA10:	return("20RA10");
-		
-		default:
-				return "UNKNOWN";
-	}
+        switch(galtype)
+        {
+                case GAL16V8:   return("16V8");
+                case GAL20V8:   return("20V8");
+                case GAL22V10:  return("22V10");
+                case GAL20RA10: return("20RA10");
+
+                default:
+                                return "UNKNOWN";
+        }
 }
 
 /******************************************************************************
@@ -310,5 +310,5 @@ char *GetGALName(int galtype)
 
 void ErrorReq(int errornum)
 {
-	printf("Error: %s\n",ErrorArray[errornum]);
+        printf("Error: %s\n",ErrorArray[errornum]);
 }
