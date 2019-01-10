@@ -3,7 +3,7 @@
 TARGET		= galasm
 OBJS		= galasm.o support.o jedec.o localize.o
 
-CFLAGS		= -Wall -O2
+CFLAGS		= -Wall -Wextra -O2
 
 ifeq ($(WIN),y)
    CC		= i686-w64-mingw32-gcc
