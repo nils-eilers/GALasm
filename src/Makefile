@@ -12,15 +12,25 @@ ifeq ($(WIN),y)
 endif
 
 
-all: $(TARGET)
+default: $(TARGET)
+all: $(TARGET) winexe galasm.com
+
+winexe: $(OBJS)
+	gmake WIN=y clean && gmake WIN=y
 
 $(TARGET): $(OBJS)
 	$(CC) -Wall $(CFLAGS) -o $@ $(OBJS)
 
+galasm.com: galasm.c support.c jedec.c localize.c
+	PATH=/opt/watcom/binl64 WATCOM=/opt/watcom wcl -mt -fe=$@ -cc $^
+
 clean:
 	-rm -f $(OBJS)
 	-rm -f *.[oa] $(TARGET) Makefile.bak
+	-rm -f galasm galasm.com galasm.exe
 
 cleantilde:
 	/usr/bin/find . -regex ".+~$$" -exec /bin/rm {} \;
 
+# Do not run multiple builds at the same time, this doesn't work
+.NOTPARALLEL:
