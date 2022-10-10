@@ -6,7 +6,10 @@ OBJS		= galasm.o support.o jedec.o localize.o
 CFLAGS		= -Wall -Wextra -O2
 
 ifeq ($(WIN),y)
+# 32 bit Windows executable:
    CC		= i686-w64-mingw32-gcc
+# 64 bit Windows executable:
+#  CC		= x86_64-w64-mingw32-gcc
    TARGET	= galasm.exe
    CFLAGS	+= -static
 endif
@@ -21,6 +24,7 @@ winexe: $(OBJS)
 $(TARGET): $(OBJS)
 	$(CC) -Wall $(CFLAGS) -o $@ $(OBJS)
 
+# 16 bit DOS executable with OpenWatcom v2 compiler:
 galasm.com: galasm.c support.c jedec.c localize.c
 	PATH=/opt/watcom/binl64 WATCOM=/opt/watcom wcl -mt -fe=$@ -cc $^
 
