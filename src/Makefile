@@ -22,7 +22,7 @@ winexe: $(OBJS)
 	gmake WIN=y clean && gmake WIN=y
 
 $(TARGET): $(OBJS)
-	$(CC) -Wall $(CFLAGS) -o $@ $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS)
 
 # 16 bit DOS executable with OpenWatcom v2 compiler:
 galasm.com: galasm.c support.c jedec.c localize.c
