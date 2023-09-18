@@ -1,5 +1,8 @@
 ## Makefile
 
+PREFIX=/usr/local
+BINDIR=bin
+
 TARGET		= galasm
 OBJS		= galasm.o support.o jedec.o localize.o
 
@@ -36,5 +39,19 @@ clean:
 cleantilde:
 	/usr/bin/find . -regex ".+~$$" -exec /bin/rm {} \;
 
+
+install: $(TARGET)
+	@if [ `id -u` != "0" ] ; then echo "must be root!"; exit 1; fi;
+	test -d $(PREFIX)/$(BINDIR) || mkdir -p $(PREFIX)/$(BINDIR)
+	install -m 0755 $(TARGET) $(PREFIX)/$(BINDIR)
+
+uninstall:
+	@if [ `id -u` != "0" ] ; then echo "must be root!"; exit 1; fi;
+	rm -f $(PREFIX)/$(BINDIR)/$(TARGET)
+
+
 # Do not run multiple builds at the same time, this doesn't work
 .NOTPARALLEL:
+
+.PHONY: all install uninstall
+
